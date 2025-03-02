@@ -1,7 +1,7 @@
-import asyncio
 import logging
-import argparse
 from datetime import datetime
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
 from core.aggregator import LLMResponseAggregator
 
 # Set up logging
@@ -16,61 +16,36 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
+# Initialize FastAPI app
+app = FastAPI()
 
-async def main():
-    """Entry point for the LLM Response Aggregator."""
-    parser = argparse.ArgumentParser(
-        description="Aggregate responses from multiple LLMs"
-    )
 
-    parser.add_argument("--query", type=str, help="Query to send to LLMs")
-    parser.add_argument(
-        "--llms",
-        type=str,
-        nargs="+",
-        default=["chatgpt", "deepseek", "grok"],
-        help="LLMs to query (default: all)",
-    )
-    parser.add_argument(
-        "--no-headless",
-        action="store_true",
-        help="Run browsers in visible mode (not headless)",
-    )
+# Define request model
+class QueryRequest(BaseModel):
+    query: str
+    llms: list[str] = ["chatgpt", "deepseek", "grok", "mistral"]
+    headless: bool = True
 
-    args = parser.parse_args()
-    # Get query from command line or user input
-    query = args.query
-    if not query:
-        query = input("Enter your query: ")
 
-    # Process the query
-    logger.info(f"Processing query: {query}")
+@app.post("/aggregate")
+async def aggregate_responses(request: QueryRequest):
+    """Endpoint to aggregate responses from multiple LLMs."""
+    logger.info(f"Processing query: {request.query}")
     aggregator = LLMResponseAggregator(
-        selected_llms=args.llms, headless=not args.no_headless
+        selected_llms=request.llms, headless=request.headless
     )
 
     try:
-        result = await aggregator.process_query(query)
-
-        # Display the best response
+        result = await aggregator.process_query(request.query)
         if "error" in result:
             logger.error(f"Error: {result['error']}")
-        else:
-            print("\n--- Best Response ---")
-            print(f"Source: {result['best_response']['source']}")
-            print(f"Score: {result['best_response']['score']:.2f}")
-            print(f"Content:\n{result['best_response']['content']}")
+            raise HTTPException(status_code=500, detail=result["error"])
 
-            # Log file location
-            filename = result.get("filename", "")
-            if filename:
-                print(f"\nAll responses saved to: {filename}")
+        return HTTPException(status_code=200, detail=result)
 
-        return result
     except Exception as e:
-        logger.exception(f"Error in main process: {str(e)}")
-        return {"error": str(e)}
+        logger.exception(f"Error processing query: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 
-if __name__ == "__main__":
-    asyncio.run(main())
+# To run the FastAPI app, use: `uvicorn main:app --host 0.0.0.0 --port 8000`
