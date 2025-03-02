@@ -106,9 +106,10 @@ llm_aggregator/
 │   └── evaluator.py          # Response evaluation logic
 ├── llms/
 │   ├── __init__.py
-│   ├── chatGPT_automation.py            # ChatGPT LLM
+│   ├── chatGPT_automation.py                # ChatGPT LLM
 │   ├── deepSeek_automation.py               # DeepSeek LLM
-│   └── genericLLM_automation.py            # generic LLM
+│   ├── factory.py                           # Factory for LLMs
+│   └── genericLLM_automation.py             # generic LLM
 
 ├── utils/
 │   ├── __init__.py
