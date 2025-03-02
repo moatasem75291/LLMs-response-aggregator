@@ -33,7 +33,7 @@ The LLM Response Aggregator is a Python application that helps you:
 1. Clone this repository:
 
 ```bash
-git clone https://github.com/yourusername/llm-response-aggregator.git
+git clone https://github.com/moatasem75291/LLMs-response-aggregator.git
 cd llm-response-aggregator
 ```
 
