@@ -104,6 +104,12 @@ llm_aggregator/
 │   ├── aggregator.py         # Main aggregator class
 │   ├── browser.py            # Browser automation
 │   └── evaluator.py          # Response evaluation logic
+├── llms/
+│   ├── __init__.py
+│   ├── chatGPT_automation.py            # ChatGPT LLM
+│   ├── deepSeek_automation.py               # DeepSeek LLM
+│   └── genericLLM_automation.py            # generic LLM
+
 ├── utils/
 │   ├── __init__.py
 │   └── storage.py            # Result storage utilities

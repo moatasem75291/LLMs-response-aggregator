@@ -1,0 +1,29 @@
+{
+    "original_query": "write a function using python to add two numbers.",
+    "best_response": {
+        "source": "grok",
+        "content": "Here's a simple Python function to add two numbers:\npython\nWrap\nCopy\ndef add_numbers(a, b):\n    return a + b\n\n# Example usage\nnum1 = 5\nnum2 = 3\nresult = add_numbers(num1, num2)\nprint(f\"The sum of {num1} and {num2} is: {result}\")\nThis function:\nTakes two parameters a and b\nReturns their sum using the + operator\nCan be used with integers or floating-point numbers\nYou can also test it with different numbers by changing the values of num1 and num2. For example:\npython\nWrap\nCopy\nprint(add_numbers(10, 20))    # Output: 30\nprint(add_numbers(3.5, 2.7))  # Output: 6.2",
+        "score": 0.8575704791212444,
+        "timestamp": "2025-03-02 16:55:53.113061"
+    },
+    "all_responses": [
+        {
+            "source": "grok",
+            "content": "Here's a simple Python function to add two numbers:\npython\nWrap\nCopy\ndef add_numbers(a, b):\n    return a + b\n\n# Example usage\nnum1 = 5\nnum2 = 3\nresult = add_numbers(num1, num2)\nprint(f\"The sum of {num1} and {num2} is: {result}\")\nThis function:\nTakes two parameters a and b\nReturns their sum using the + operator\nCan be used with integers or floating-point numbers\nYou can also test it with different numbers by changing the values of num1 and num2. For example:\npython\nWrap\nCopy\nprint(add_numbers(10, 20))    # Output: 30\nprint(add_numbers(3.5, 2.7))  # Output: 6.2",
+            "score": 0.8575704791212444,
+            "timestamp": "2025-03-02 16:55:53.113061"
+        },
+        {
+            "source": "mistral",
+            "content": "Certainly! Here's a simple Python function to add two numbers:\nCopy\ndef add_numbers(a, b):\n    return a + b\n\n# Example usage:\nresult = add_numbers(3, 5)\nprint(f\"The sum of 3 and 5 is {result}\")\nIn this function:\na and b are the parameters that represent the two numbers you want to add.\nThe function returns the sum of a and b.\nThe example usage demonstrates how to call the function and print the result.",
+            "score": 0.7711776274156781,
+            "timestamp": "2025-03-02 16:55:52.143279"
+        },
+        {
+            "source": "chatgpt",
+            "content": "Here's a simple Python function that adds two numbers:\npython\nCopy\ndef add_numbers(num1, num2):\n    return num1 + num2\nYou can call the function like this:\npython\nCopy\nresult = add_numbers(5, 3)\nprint(result)  # Output will be 8\nThis function takes two arguments (num1 and num2) and returns their sum.",
+            "score": 0.7207173913880893,
+            "timestamp": "2025-03-02 16:55:58.914419"
+        }
+    ]
+}
