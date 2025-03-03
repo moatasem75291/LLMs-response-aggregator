@@ -19,7 +19,12 @@ class LLMAutomationFactory:
             from llms.deepSeek_automation import DeepSeekAutomation
 
             return DeepSeekAutomation(headless)
-        else:
-            from llms.genericLLM_automation import GenericLLMAutomation
 
-            return GenericLLMAutomation(llm_name, headless)
+        elif llm_name == "mistral":
+            from llms.mistral_automation import MistralAutomation
+
+            return MistralAutomation(llm_name, headless)
+        elif llm_name == "grok":
+            from llms.grok_automation import GrokAutomation
+
+            return GrokAutomation(llm_name, headless)

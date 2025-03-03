@@ -16,7 +16,7 @@ LLM_CONFIGS = {
     "mistral": {
         "url": "https://chat.mistral.ai/chat/",
         "input_selector": "textarea.border-input",
-        "response_selector": "div.prose.select-text",
+        "response_selector": '(//div[contains(@class, "prose")])[last()]',
         "wait_time": 20,
     },
     "grok": {

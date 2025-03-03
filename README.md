@@ -109,11 +109,17 @@ llm_aggregator/
 │   ├── chatGPT_automation.py                # ChatGPT LLM
 │   ├── deepSeek_automation.py               # DeepSeek LLM
 │   ├── factory.py                           # Factory for LLMs
-│   └── genericLLM_automation.py             # generic LLM
-
+│   ├── grok_automation.py                   # Grok LLM
+│   └── mistral_automation.py                # Mistral LLM
 ├── utils/
 │   ├── __init__.py
 │   └── storage.py            # Result storage utilities
+├── README.md                 # Project description
+├── LICENSE.md                # License
+├── .gitignore                # Ignore files
+├── .dockerignore             # Ignore files
+├── .env                      # Environment variables
+├── Dockerfile                # Dockerfile
 └── requirements.txt          # Dependencies
 ```
 
