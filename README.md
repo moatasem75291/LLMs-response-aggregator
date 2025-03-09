@@ -37,20 +37,22 @@ git clone https://github.com/moatasem75291/LLMs-response-aggregator.git
 cd llm-response-aggregator
 ```
 
-2. Create and activate a virtual environment:
+2. Build the Docker image:
 
 ```bash
-python -m venv .venv
-# On Windows
-.venv\Scripts\activate
-# On macOS/Linux
-source .venv/bin/activate
+docker build -t llm_aggregator .
 ```
 
-3. Install dependencies:
+3. Run the Docker container:
 
-```python
-pip install -r requirements.txt
+```bash
+docker run -d -p 8000:8000 --name llm_aggregator_container llm_aggregator
+```
+
+4. (Optional) If you want to customize environment variables like email and password, you can modify .env during the build:
+
+```Dockerfile
+RUN echo -e "DEEPSEEK_EMAIL=\"PUT-YOUR-EMAIL-HERE\"\nDEEPSEEK_PASSWORD=\"PUT-YOUR-PASS-HERE\"" > .env
 ```
 
 ### Usage
@@ -59,35 +61,59 @@ pip install -r requirements.txt
 
 Run the tool with a query:
 
-```python
-python main.py --query "Explain quantum computing"
+```bash
+curl -X POST -H "Content-Type: application/json" \
+-d '{"query": "Explain quantum computing", "llms": ["chatgpt", "mistral"], "headless": false}' \
+http://localhost:8000/aggregate
 ```
 
-If you don't provide a query, you'll be prompted to enter one.
+- Available Parameters:
 
-#### Command Line Options
+  - **query** (str): The question you want to ask. _(Required)_
+  - **llms** (list): List of LLMs to query (e.g., `chatgpt`, `deepseek`, `grok`, `mistral`). _(Default: All LLMs)_
+  - **headless** (bool): Run browsers in headless mode for faster execution. _(Default: True)_
 
-```python
-python main.py [options]
+#### Request Example
 
-Options:
-  --query TEXT        Query to send to LLMs
-  --llms LIST         LLMs to query (default: chatgpt mistral grok)
-  --no-headless       Run browsers in visible mode (not headless)
+```json
+{
+  "query": "Hi how are you? Can you help me write a function using Python to add two numbers?",
+  "llms": ["chatgpt", "mistral"],
+  "headless": false
+}
 ```
 
-#### Examples
+#### Response Example
 
-Query specific LLMs:
-
-```python
-python main.py --llms chatgpt grok --query "How does blockchain work?"
-```
-
-Show browser interactions (for debugging):
-
-```python
-python main.py --query "Explain machine learning" --no-headless
+```json
+{
+  "status_code": 200,
+  "detail": {
+    "original_query": "Hi how are you? Can you help me write a function using Python to add two numbers?",
+    "best_response": {
+      "source": "chatgpt",
+      "content": "Hi! I'm doing great, thanks for asking! 😊 I'd be happy to help you write a function in Python to add two numbers.\nHere's a simple function for that:\npython\nCopy\ndef add_numbers(a, b):\n    return a + b\nYou can call this function by passing two numbers as arguments:\npython\nCopy\nresult = add_numbers(3, 5)\nprint(result)  # This will print 8\nLet me know if you'd like any modifications or further explanation!",
+      "score": 0.8276620791112479,
+      "timestamp": "2025-03-09T15:23:39.027032"
+    },
+    "all_responses": [
+      {
+        "source": "chatgpt",
+        "content": "Hi! I'm doing great, thanks for asking! 😊 I'd be happy to help you write a function in Python to add two numbers.\nHere's a simple function for that:\npython\nCopy\ndef add_numbers(a, b):\n    return a + b\nYou can call this function by passing two numbers as arguments:\npython\nCopy\nresult = add_numbers(3, 5)\nprint(result)  # This will print 8\nLet me know if you'd like any modifications or further explanation!",
+        "score": 0.8276620791112479,
+        "timestamp": "2025-03-09T15:23:39.027032"
+      },
+      {
+        "source": "mistral",
+        "content": "Hello! I'm here to help. Sure, I can help you write a Python function to add two numbers. Here's a simple example:\nCopy\ndef add_numbers(a, b):\n    return a + b\n\n# Example usage:\nresult = add_numbers(3, 5)\nprint(result)  # Output: 8\nIn this function, a and b are the parameters that represent the two numbers you want to add. The function returns the sum of a and b. You can call this function with any two numbers to get their sum.",
+        "score": 0.7776620791112479,
+        "timestamp": "2025-03-09T15:23:34.012462"
+      }
+    ],
+    "filename": "results/llm_responses_20250309_152339.json"
+  },
+  "headers": null
+}
 ```
 
 ### Project Structure:
