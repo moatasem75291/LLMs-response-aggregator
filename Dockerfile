@@ -37,6 +37,10 @@ RUN curl -sS https://bootstrap.pypa.io/get-pip.py | /opt/venv/bin/python
 # Set the working directory in the container
 WORKDIR /app
 
+# 🚨🚨 OPTIONAL STEP: Set environment variables for DeepSeek credentials if you want to use
+# Only use this step if you want to set your DeepSeek credentials.
+RUN echo -e "DEEPSEEK_EMAIL=\"PUT-YOUR-EMAIL-HERE\"\nDEEPSEEK_PASSWORD=\"PUT-YOUR-PASS-HERE\"" > .env
+
 # Copy the application files and install Python dependencies
 COPY requirements.txt .
 # Use the virtual environment's pip to install dependencies

@@ -11,7 +11,7 @@ LLM_CONFIGS = {
         "url": "https://chat.openai.com/",
         "input_selector": "div.ProseMirror",
         "response_selector": "div.markdown.prose",
-        "wait_time": 20,  # seconds
+        "wait_time": 30,  # seconds
     },
     "mistral": {
         "url": "https://chat.mistral.ai/chat/",
@@ -23,7 +23,7 @@ LLM_CONFIGS = {
         "url": "https://grok.com/",
         "input_selector": "textarea.w-full.px-2",
         "response_selector": "div.message-bubble.prose",
-        "wait_time": 20,
+        "wait_time": 25,
     },
     "deepseek": {
         "url": "https://chat.deepseek.com/",
@@ -32,7 +32,7 @@ LLM_CONFIGS = {
         "input_selector": "textarea.c92459f0",
         "response_selector": "div.ds-markdown",
         "wait_time_for_logging": 5,
-        "wait_time": 20,
+        "wait_time": 40,
     },
 }
 
