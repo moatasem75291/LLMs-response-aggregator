@@ -2,11 +2,13 @@ from typing import Dict
 import logging
 import time
 
-from selenium import webdriver
+import undetected_chromedriver as uc
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
 
 from core.browser import LLMBrowserAutomation
 
@@ -25,9 +27,8 @@ class GrokAutomation(LLMBrowserAutomation):
 
     def setup_driver(self, config: Dict):
         logger.info(f"Starting browser for {self.get_name()}")
-        return webdriver.Chrome(
-            options=self.get_chrome_options(),
-        )
+        service = Service(ChromeDriverManager().install())
+        return uc.Chrome(service=service, options=self.get_chrome_options())
 
     def authenticate(self, driver, config: Dict):
         # Grok LLM doesn't need authentication in this implementation

@@ -8,6 +8,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
 
 from core.browser import LLMBrowserAutomation
 
@@ -26,7 +28,8 @@ class MistralAutomation(LLMBrowserAutomation):
 
     def setup_driver(self, config: Dict):
         logger.info(f"Starting browser for {self.get_name()}")
-        return webdriver.Chrome(options=self.get_chrome_options())
+        service = Service(ChromeDriverManager().install())
+        return webdriver.Chrome(service=service, options=self.get_chrome_options())
 
     def authenticate(self, driver, config: Dict):
         # mistral LLM doesn't need authentication in this implementation
@@ -34,9 +37,9 @@ class MistralAutomation(LLMBrowserAutomation):
 
     def input_query(self, driver, config: Dict, query: str):
         WebDriverWait(driver, config["wait_time"]).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, config["input_selector"]))
+            EC.element_to_be_clickable((By.XPATH, config["input_selector"]))
         )
-        input_field = driver.find_element(By.CSS_SELECTOR, config["input_selector"])
+        input_field = driver.find_element(By.XPATH, config["input_selector"])
         try:
             input_field.clear()
         except:

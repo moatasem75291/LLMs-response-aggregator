@@ -8,6 +8,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
 
 from core.browser import LLMBrowserAutomation
 
@@ -22,7 +24,8 @@ class DeepSeekAutomation(LLMBrowserAutomation):
 
     def setup_driver(self, config: Dict):
         logger.info(f"Starting browser for {self.get_name()}")
-        return uc.Chrome(options=self.get_chrome_options())
+        service = Service(ChromeDriverManager().install())
+        return uc.Chrome(service=service, options=self.get_chrome_options())
 
     def authenticate(self, driver, config: Dict):
         # Login process for DeepSeek
