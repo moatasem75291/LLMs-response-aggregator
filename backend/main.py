@@ -1,7 +1,10 @@
 import logging
 from datetime import datetime
-from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+
 from core.aggregator import LLMResponseAggregator
 
 # Set up logging
@@ -18,6 +21,15 @@ logger = logging.getLogger(__name__)
 
 # Initialize FastAPI app
 app = FastAPI()
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # React dev server
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all methods
+    allow_headers=["*"],  # Allow all headers
+)
 
 
 # Define request model
