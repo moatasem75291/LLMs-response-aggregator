@@ -118,8 +118,8 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-100">
-      <header className="bg-blue-600 text-white p-4 shadow-md">
+    <div className="flex flex-col h-screen bg-beige-100">
+      <header className="bg-charcoal-900 text-beige-100 p-4 shadow-md">
         <div className="flex justify-between items-center max-w-4xl mx-auto">
           <div>
             <h1 className="text-2xl font-bold">LLM Response Aggregator</h1>
@@ -129,7 +129,7 @@ function App() {
             <span className="mr-2 text-sm">{apiMode ? 'API' : 'Demo'} Mode</span>
             <button 
               onClick={toggleApiMode}
-              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${apiMode ? 'bg-green-500' : 'bg-gray-200'}`}
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-beige-300 focus:ring-offset-2 ${apiMode ? 'bg-beige-400' : 'bg-charcoal-600'}`}
             >
               <span
                 className={`inline-block h-4 w-4 transform rounded-full bg-white transition ${
@@ -142,7 +142,7 @@ function App() {
       </header>
 
       <div className="flex flex-1 overflow-hidden">
-        <div className="w-full flex flex-col max-w-4xl mx-auto bg-white shadow-lg rounded-lg my-4 overflow-hidden">
+        <div className="w-full flex flex-col max-w-4xl mx-auto bg-white shadow-lg rounded-lg my-4 overflow-hidden border border-beige-200">
           <div className="flex-1 p-4 overflow-y-auto">
             {messages.map((msg, index) => (
               <ChatMessage key={index} message={msg} />
@@ -160,7 +160,7 @@ function App() {
             <div ref={messageEndRef} />
           </div>
 
-          <div className="border-t p-4 bg-gray-50">
+          <div className="border-t border-beige-200 p-4 bg-beige-50">
             <LLMSelector 
               availableLLMs={availableLLMs} 
               selectedLLMs={selectedLLMs} 
@@ -170,7 +170,7 @@ function App() {
             
             <div className="flex mt-2">
               <textarea
-                className="flex-1 p-2 border rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="flex-1 p-2 border border-beige-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-beige-500"
                 placeholder="Ask a question..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
@@ -181,8 +181,8 @@ function App() {
               <button
                 className={`px-4 py-2 rounded-r-lg transition ${
                   isLoading 
-                    ? 'bg-gray-400 text-white cursor-not-allowed' 
-                    : 'bg-blue-600 text-white hover:bg-blue-700'
+                    ? 'bg-charcoal-400 text-white cursor-not-allowed' 
+                    : 'bg-charcoal-800 text-beige-100 hover:bg-charcoal-900'
                 }`}
                 onClick={handleSend}
                 disabled={isLoading}
@@ -192,8 +192,8 @@ function App() {
             </div>
             
             {isLoading && (
-              <div className="mt-2 text-sm text-gray-500 flex items-center">
-                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <div className="mt-2 text-sm text-charcoal-600 flex items-center">
+                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-beige-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
